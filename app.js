@@ -29,12 +29,36 @@ const blogPostSchema = {
 
 const BlogPost = mongoose.model("BlogPost", blogPostSchema)
 
-let posts = [];
+const post1 = new BlogPost({
+  title: "Day 1",
+  content:  "Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus."
+})
+const post2 = new BlogPost({
+  title: "Day 2",
+  content:  "Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus."
+})
+
+const post3 = new BlogPost({
+  title: "Day 3",
+  content:  "Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus."
+})
+
+const allBlogPosts = [post1, post2, post3]
+
+BlogPost.insertMany(allBlogPosts, function(err){
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Saved default blog post to db");
+  }
+})
+
+
 
 app.get("/", function(req, res){
   res.render("home", {
     startingContent: homeStartingContent,
-    posts: posts
+    posts: allBlogPosts
     });
 });
 
