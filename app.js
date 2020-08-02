@@ -56,10 +56,12 @@ BlogPost.insertMany(allBlogPosts, function(err){
 
 
 app.get("/", function(req, res){
-  res.render("home", {
-    startingContent: homeStartingContent,
-    posts: allBlogPosts
-    });
+  BlogPost.find({}, function(err, posts){
+    res.render("home", {
+      startingContent: homeStartingContent,
+      posts: posts
+    })
+  })
 });
 
 app.get("/about", function(req, res){
@@ -75,15 +77,15 @@ app.get("/compose", function(req, res){
 });
 
 app.post("/compose", function(req, res){
-  const post = {
+
+  const post = new BlogPost ({
     title: req.body.postTitle,
     content: req.body.postBody
-  };
+  })
 
-  posts.push(post);
+  post.save();
 
   res.redirect("/");
-
 });
 
 app.get("/posts/:postName", function(req, res){
